@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Proyecto Final – Investigación de Operaciones 2</title>
+<style>
+:root{--bg:#f7f6f2;--card:#fff;--tx:#1d2330;--mut:#5b6475;--ac:#1d5fd1;--ac2:#e8f0fd;--bd:#dcdfe6;--ok:#157347;--okbg:#e5f4ec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b202b;--tx:#e8eaf0;--mut:#9aa3b5;--ac:#6ea2ff;--ac2:#1f2b45;--bd:#2c3445;--ok:#5fd39a;--okbg:#17302a}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1b202b;--tx:#e8eaf0;--mut:#9aa3b5;--ac:#6ea2ff;--ac2:#1f2b45;--bd:#2c3445;--ok:#5fd39a;--okbg:#17302a}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--card);border-bottom:1px solid var(--bd);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;z-index:20}
+nav a{color:var(--tx);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px;white-space:nowrap}
+nav a:hover{background:var(--ac2);color:var(--ac)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:30}
+header{max-width:900px;margin:0 auto;padding:40px 20px 10px}
+header small{color:var(--ac);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15;margin:.3em 0}
+h2{font-size:24px;margin:0 0 4px}h3{font-size:17px;margin:20px 0 6px}
+main{max-width:900px;margin:0 auto;padding:0 20px 60px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:24px;margin:20px 0}
+.tag{display:inline-block;background:var(--ac);color:#fff;border-radius:6px;padding:2px 10px;font-size:13px;font-weight:700;margin-bottom:8px}
+.meth{background:var(--ac2);border-left:4px solid var(--ac);padding:12px 16px;border-radius:8px;margin:14px 0}
+.meth b{color:var(--ac)}
+.res{background:var(--okbg);border-left:4px solid var(--ok);padding:12px 16px;border-radius:8px;margin:14px 0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid var(--bd);padding:8px 12px;text-align:center}
+th{background:var(--ac2)}td:first-child,th:first-child{text-align:left}
+tr.best td{background:var(--okbg);font-weight:700}
+code,.f{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--ac2);padding:2px 6px;border-radius:5px;font-size:14px}
+.f{display:block;padding:10px 14px;margin:8px 0;overflow-x:auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+.steps div{border:1px solid var(--bd);border-radius:10px;padding:12px;background:var(--bg);font-size:14px}
+.steps b{color:var(--ac);display:block}
+.tree{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:14px;overflow-x:auto;white-space:pre;line-height:1.5}
+.mut{color:var(--mut)}
+</style>
+</head>
+<body>
+<nav>
+<a href="#metodologia">Metodología</a><a href="#problema">1. Problema</a><a href="#pl">2. Prog. lineal</a><a href="#naturaleza">3. Estados de la naturaleza</a><a href="#juegos">4. Teoría de juegos</a><a href="#conclusiones">Conclusiones</a>
+</nav>
+<header>
+<small>Investigación de Operaciones 2</small>
+<h1>Proyecto Final: de la programación lineal a la decisión estratégica</h1>
+<p class="mut">Caso aplicado: fábrica de muebles «MaderaViva». Cifras en miles de pesos (COP) por unidad o por mes.</p>
+</header>
+<main>
+
+<section id="metodologia">
+<span class="tag">Metodología</span>
+<h2>Metodología empleada</h2>
+<p>El proyecto sigue el ciclo clásico de la investigación de operaciones: definir, modelar, resolver, interpretar y decidir bajo incertidumbre y competencia.</p>
+<div class="steps">
+<div><b>1. Definición</b>Elegir el problema; fijar objetivos, función objetivo y restricciones.</div>
+<div><b>2. Modelado y solución</b>Formular el modelo de programación lineal y resolverlo (método gráfico / vértices).</div>
+<div><b>3. Incertidumbre</b>Definir estados de la naturaleza, tabla de pagos, árbol de decisión y probabilidades.</div>
+<div><b>4. Competencia</b>Modelar un juego de suma cero: estrategias dominadas y estrategias mixtas.</div>
+</div>
+<div class="meth"><b>Herramientas:</b> método de vértices, valor esperado (VE), criterio maximin, árbol de decisión, dominancia, equilibrio en estrategias mixtas (igualación de pagos esperados).</div>
+</section>
+
+<section id="problema">
+<span class="tag">Paso 1</span>
+<h2>Elegir un problema: objetivos, función objetivo y restricciones</h2>
+<p><b>Problema:</b> MaderaViva fabrica <b>mesas</b> (x₁) y <b>sillas</b> (x₂). Se quiere decidir cuántas unidades producir al mes para maximizar la utilidad.</p>
+<h3>Objetivos</h3>
+<ul><li>Maximizar la utilidad mensual.</li><li>Usar de forma eficiente las horas de carpintería y de acabado.</li></ul>
+<h3>1. Función objetivo</h3>
+<span class="f">Max Z = 50x₁ + 40x₂</span>
+<p class="mut">Utilidad: $50 por mesa y $40 por silla.</p>
+<h3>2. Restricciones</h3>
+<span class="f">Carpintería: 2x₁ + 1x₂ ≤ 100 (horas)<br>Acabado: 1x₁ + 1x₂ ≤ 80 (horas)<br>No negatividad: x₁, x₂ ≥ 0</span>
+<div class="scroll"><table>
+<tr><th>Recurso</th><th>Mesa</th><th>Silla</th><th>Disponible</th></tr>
+<tr><td>Carpintería (h)</td><td>2</td><td>1</td><td>100</td></tr>
+<tr><td>Acabado (h)</td><td>1</td><td>1</td><td>80</td></tr>
+<tr><td>Utilidad ($)</td><td>50</td><td>40</td><td>—</td></tr>
+</table></div>
+</section>
+
+<section id="pl">
+<span class="tag">Paso 2</span>
+<h2>Programación lineal → Solución</h2>
+<div class="meth"><b>Método:</b> teorema fundamental de la PL; el óptimo está en un vértice de la región factible. Se hallan los vértices y se evalúa Z en cada uno.</div>
+<h3>Vértices de la región factible</h3>
+<ul>
+<li>Intersección de ambas restricciones: 2x₁ + x₂ = 100 y x₁ + x₂ = 80. Restando: x₁ = 20, luego x₂ = 60.</li>
+<li>Ejes: (0,0), (50,0) y (0,80).</li>
+</ul>
+<div class="scroll"><table>
+<tr><th>Vértice (x₁, x₂)</th><th>Z = 50x₁ + 40x₂</th></tr>
+<tr><td>(0, 0)</td><td>0</td></tr>
+<tr><td>(50, 0)</td><td>2.500</td></tr>
+<tr class="best"><td>(20, 60)</td><td>3.400</td></tr>
+<tr><td>(0, 80)</td><td>3.200</td></tr>
+</table></div>
+<div class="res"><b>Solución óptima:</b> producir <b>20 mesas y 60 sillas</b> al mes, con utilidad máxima <b>Z* = $3.400</b>. Ambos recursos quedan agotados (100 h de carpintería y 80 h de acabado).</div>
+<p class="mut">Precios sombra: pasar de la base {x₁, x₂} al sistema dual da y₁ = 10 y y₂ = 30. Una hora extra de carpintería vale $10 y una de acabado, $30.</p>
+</section>
+
+<section id="naturaleza">
+<span class="tag">Paso 3</span>
+<h2>Competidores o estados de la naturaleza: árbol de decisión y probabilidad</h2>
+<div class="meth"><b>Método:</b> la utilidad real depende de la demanda, que no controlamos. Se definen tres estados de la naturaleza, se construye la tabla de pagos y se decide con valor esperado (con probabilidades) y maximin (sin probabilidades).</div>
+<h3>Estados de la naturaleza y probabilidades</h3>
+<p>Demanda <b>Alta</b> (P = 0,30), <b>Media</b> (P = 0,50), <b>Baja</b> (P = 0,20).</p>
+<h3>Alternativas de decisión</h3>
+<ul><li><b>A:</b> mezcla óptima (20 mesas, 60 sillas)</li><li><b>B:</b> solo mesas (50, 0)</li><li><b>C:</b> solo sillas (0, 80)</li></ul>
+<h3>Tabla de pagos (utilidad)</h3>
+<div class="scroll"><table>
+<tr><th>Alternativa</th><th>Alta (0,3)</th><th>Media (0,5)</th><th>Baja (0,2)</th><th>Valor esperado</th><th>Mínimo</th></tr>
+<tr class="best"><td>A. Mezcla óptima</td><td>3.400</td><td>2.600</td><td>1.200</td><td>2.560</td><td>1.200</td></tr>
+<tr><td>B. Solo mesas</td><td>2.500</td><td>2.000</td><td>800</td><td>1.910</td><td>800</td></tr>
+<tr><td>C. Solo sillas</td><td>3.200</td><td>2.100</td><td>400</td><td>2.090</td><td>400</td></tr>
+</table></div>
+<p class="mut">Ejemplo: VE(A) = 0,3·3.400 + 0,5·2.600 + 0,2·1.200 = 1.020 + 1.300 + 240 = 2.560.</p>
+<h3>Árbol de decisión</h3>
+<div class="tree">[Decisión] ─┬─ A. Mezcla ──(○ VE = 2.560)─┬─ Alta  0,3 → 3.400
+            │                             ├─ Media 0,5 → 2.600
+            │                             └─ Baja  0,2 → 1.200
+            ├─ B. Mesas  ──(○ VE = 1.910)─┬─ Alta  0,3 → 2.500
+            │                             ├─ Media 0,5 → 2.000
+            │                             └─ Baja  0,2 →   800
+            └─ C. Sillas ──(○ VE = 2.090)─┬─ Alta  0,3 → 3.200
+                                          ├─ Media 0,5 → 2.100
+                                          └─ Baja  0,2 →   400</div>
+<div class="res"><b>Decisión:</b> la alternativa A es la mejor por valor esperado (2.560) y también por maximin (1.200). Además, A <b>domina</b> a B, porque rinde más en los tres estados.</div>
+</section>
+
+<section id="juegos">
+<span class="tag">Paso 4</span>
+<h2>Estrategias: teoría de juegos (dominadas y mixtas)</h2>
+<div class="meth"><b>Método:</b> juego de suma cero entre MaderaViva (filas, maximiza) y un competidor (columnas, minimiza). Se eliminan estrategias dominadas, se busca punto silla y, si no existe, se calcula la estrategia mixta igualando pagos esperados.</div>
+<p>Estrategias: <b>1</b> Precio bajo, <b>2</b> Calidad, <b>3</b> Publicidad. Pago = puntos de participación de mercado ganados por MaderaViva.</p>
+<div class="scroll"><table>
+<tr><th>MaderaViva \ Competidor</th><th>B1 Precio</th><th>B2 Calidad</th><th>B3 Publicidad</th></tr>
+<tr><td>A1 Precio</td><td>3</td><td>−1</td><td>2</td></tr>
+<tr><td>A2 Calidad</td><td>−2</td><td>4</td><td>1</td></tr>
+<tr><td>A3 Publicidad</td><td>1</td><td>−2</td><td>0</td></tr>
+</table></div>
+<h3>a) Estrategias dominadas</h3>
+<p>A1 domina a A3 (3 ≥ 1, −1 ≥ −2, 2 ≥ 0), así que se elimina A3. Queda un juego 2×3.</p>
+<h3>b) Punto silla</h3>
+<p>Maximin = −1 (fila A1) y minimax = 2 (columna B3). No coinciden, por lo que <b>no hay punto silla</b> y se requieren estrategias mixtas.</p>
+<h3>c) Estrategia mixta</h3>
+<p>Sea p la probabilidad de jugar A1. Pago esperado según la columna:</p>
+<span class="f">B1: 3p − 2(1−p) = 5p − 2<br>B2: −p + 4(1−p) = 4 − 5p<br>B3: 2p + (1−p) = p + 1</span>
+<p>Igualando B1 y B2: 5p − 2 = 4 − 5p, entonces p = 0,6 y v = 1. En p = 0,6, B3 da 1,6 &gt; 1, así que el competidor no la usa.</p>
+<p>Para el competidor, con q = prob(B1): 4q − 1 = 4 − 6q, entonces q = 0,5 y v = 1 (se verifica).</p>
+<div class="scroll"><table>
+<tr><th>Jugador</th><th>Estrategia óptima</th></tr>
+<tr class="best"><td>MaderaViva</td><td>A1 = 60 %, A2 = 40 %, A3 = 0 %</td></tr>
+<tr class="best"><td>Competidor</td><td>B1 = 50 %, B2 = 50 %, B3 = 0 %</td></tr>
+<tr><td>Valor del juego</td><td>v = +1 punto de mercado a favor de MaderaViva</td></tr>
+</table></div>
+</section>
+
+<section id="conclusiones">
+<span class="tag">Cierre</span>
+<h2>Conclusiones</h2>
+<ul>
+<li><b>Producción:</b> 20 mesas y 60 sillas generan la utilidad máxima de $3.400, con los recursos agotados.</li>
+<li><b>Incertidumbre:</b> la mezcla óptima es también la decisión más robusta: VE = 2.560 y mínimo garantizado de 1.200.</li>
+<li><b>Competencia:</b> ante un rival, conviene alternar precio bajo (60 %) y calidad (40 %); así se asegura una ganancia esperada de 1 punto de mercado, sin importar lo que haga el competidor.</li>
+<li><b>Integración:</b> la PL define qué producir, el árbol de decisión protege frente a la demanda y la teoría de juegos guía la estrategia comercial.</li>
+</ul>
+</section>
+
+</main>
+</body>
+</html>
